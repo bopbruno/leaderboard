@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar target/ponto-inteligente-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar target/leaderboard-0.0.1-SNAPSHOT.jar
