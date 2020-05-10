@@ -2,3 +2,6 @@
 
 # Leaderboard API
 API feita com Java e Spring Boot.
+
+# Endpoint:
+https://immense-temple-69759.herokuapp.com/swagger-ui.html
