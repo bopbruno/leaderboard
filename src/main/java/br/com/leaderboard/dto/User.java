@@ -16,6 +16,12 @@ public class User implements Comparable<Integer>{
 		this.lastScore =  -1;
 	}
 		
+	public User(User userReturn) {
+		this.Id = userReturn.getId();
+		this.score = userReturn.getScore();
+		this.lastScore =  userReturn.getLastScore();
+	}
+
 	public void addScore(int score) {
 		this.setScore(this.getScore() + score);
 	}

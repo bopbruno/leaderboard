@@ -1,8 +1,8 @@
 package br.com.leaderboard.services.impl;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import br.com.leaderboard.services.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	private ArrayList<User> users = new ArrayList<>();
+	private CopyOnWriteArrayList<User> users = new CopyOnWriteArrayList<>();
 	
 	@Override
 	public User addOrUpdateUser(Score score) {
@@ -25,13 +25,14 @@ public class UserServiceImpl implements UserService {
 		if(index<0) {
 			userReturn = new User(score.getUserId(), score.getScore());
 			users.add((index*-1)-1, userReturn);
-			return userReturn;
+			return new User(userReturn);
 		}
 		else {			
 			userReturn = users.get(index);
 			userReturn.setLastScore(userReturn.getScore());
 			userReturn.addScore(score.getScore());
-			return userReturn;
+			
+			return new User(userReturn);
 		}
 	}
 
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	public Optional<User> getUser(int userId) {
 		int index = Collections.binarySearch(users, userId);
 		if(index>=0) {
-			return Optional.of(users.get(index));
+			return Optional.of(new User(users.get(index)));
 		}
 		else {
 			return Optional.empty();

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.leaderboard.dto.ScoreLine;
 import br.com.leaderboard.dto.User;
+import br.com.leaderboard.dto.UserDto;
 import br.com.leaderboard.services.RankService;
 
 @Service
@@ -21,7 +22,7 @@ public class RankServiceImpl implements RankService {
 
 	@Override
 	public void addOrUpdateUserPosition(User user) {
-
+		synchronized (leaderboard) {
 		if (user.getLastScore() == -1) {
 
 			int indexScore = Collections.binarySearch(leaderboard, user.getScore());
@@ -34,7 +35,7 @@ public class RankServiceImpl implements RankService {
 				leaderboard.add((indexScore * -1) - 1, new ScoreLine(user));
 			}
 
-		} else {
+		} else {			
 			int indexScore = Collections.binarySearch(leaderboard, user.getLastScore());
 
 			ScoreLine scoreLine = leaderboard.get(indexScore);
@@ -45,6 +46,14 @@ public class RankServiceImpl implements RankService {
 				leaderboard.remove(indexScore);
 			}
 
+			try { 
+		         //Thread.sleep(10000); 
+		     } 
+		     catch (Exception e) { 
+		         System.out.println("Child Thread"
+		                  + " going to add element"); 
+		     }
+			
 			int indexNewScore = Collections.binarySearch(leaderboard, user.getScore());
 
 			if (indexNewScore >= 0) {
@@ -55,25 +64,50 @@ public class RankServiceImpl implements RankService {
 				leaderboard.add((indexNewScore * -1) - 1, new ScoreLine(user));
 			}
 		}
+		}
 
 	}
 
 	@Override
-	public List<ScoreLine> getHighScoreList(int limit) {
-		
-		if(leaderboard.isEmpty()) {
-			return new ArrayList<ScoreLine>();
+	public List<UserDto> getHighScoreList(int limit) {
+		synchronized (leaderboard) {
+			
+			List<UserDto> userDtos = new ArrayList<UserDto>();
+			
+			if(leaderboard.isEmpty()) {
+				return userDtos;
+			}
+			
+			int listLimit = limit > leaderboard.size() ? leaderboard.size(): limit;
+			
+			int position = 1;
+			
+			List<ScoreLine> highScoreList = leaderboard.subList(0, listLimit);
+			
+			for(ScoreLine sl : highScoreList) {
+				
+				List<User> users = sl.getUsers();
+				
+				for(User user : users) {
+					UserDto userDto = new UserDto(user,position);
+					userDtos.add(userDto);					
+				}
+				
+				position++;
+			}
+			
+			return userDtos;
+			
 		}
 		
-		int listLimit = limit >= leaderboard.size() ? leaderboard.size(): limit;
-		
-		return leaderboard.subList(0, listLimit);
 	}
 
 	@Override
 	public int getUserPosition(User user) {
+		synchronized (leaderboard) {
 		int indexScore = Collections.binarySearch(leaderboard, user.getScore());
 		return indexScore+1;
+		}
 	}
 
 }
