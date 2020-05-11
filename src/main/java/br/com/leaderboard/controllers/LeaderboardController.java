@@ -19,8 +19,11 @@ import br.com.leaderboard.dto.User;
 import br.com.leaderboard.dto.UserDto;
 import br.com.leaderboard.services.RankService;
 import br.com.leaderboard.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value = "Leaderboard")
 public class LeaderboardController {
 
 	@Autowired
@@ -32,6 +35,7 @@ public class LeaderboardController {
 	}
 
 	@PostMapping(value = "/score")
+	@ApiOperation(value = "add a user and score or if the user exist, it sums the user's score (score = current score + new points)")
 	public void addOrUpdateUser(@Valid @RequestBody Score score) {
 		synchronized (score) {
 			User user = userService.addOrUpdateUser(score);
@@ -40,12 +44,13 @@ public class LeaderboardController {
 	}
 
 	@GetMapping(value = "/{userId}/position")
+	@ApiOperation(value = "Retrieves the current position of a specific user, considering the score for all users.")
 	public UserDto getUser(@PathVariable("userId") int userId) {
 		
 		Optional<User> user= userService.getUser(userId);
 		
 		if(!user.isPresent()) {
-			return new UserDto();
+			return null;
 		}
 		
 		UserDto userDto = this.convertUserTouserDto(user.get());
@@ -56,6 +61,7 @@ public class LeaderboardController {
 	}
 
 	@GetMapping(value = "/highscorelist")
+	@ApiOperation(value = "Retrieves the high scores list, in descending order by score, limited to the 20000 higher scores.")
 	public List<UserDto> getHighScoreList(){		
 		
 		int limit = 2000;
