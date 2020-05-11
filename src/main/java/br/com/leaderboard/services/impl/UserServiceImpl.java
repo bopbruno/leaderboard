@@ -13,7 +13,7 @@ import br.com.leaderboard.services.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-	ArrayList<User> users = new ArrayList<>();
+	private ArrayList<User> users = new ArrayList<>();
 	
 	@Override
 	public User addOrUpdateUser(Score score) {

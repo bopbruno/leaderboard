@@ -13,7 +13,7 @@ import br.com.leaderboard.services.RankService;
 @Service
 public class RankServiceImpl implements RankService {
 
-	ArrayList<ScoreLine> leaderboard = new ArrayList<>();
+	private ArrayList<ScoreLine> leaderboard = new ArrayList<>();
 
 	public RankServiceImpl() {
 
