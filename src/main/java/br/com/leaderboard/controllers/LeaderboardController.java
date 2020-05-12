@@ -58,7 +58,7 @@ public class LeaderboardController {
 	@ApiOperation(value = "Retrieves the high scores list, in descending order by score, limited to the 20000 higher scores.")
 	public List<UserDto> getHighScoreList(){		
 		
-		int limit = 2;
+		int limit = 20000;
 		
 		return rankService.getHighScoreList(limit);		
 		
