@@ -21,7 +21,9 @@ import br.com.leaderboard.services.RankService;
  * Para otimizar o tempo de busca as posições são inseridos pela ordem score que no caso
  * são numeros inteiros, assim é possivel usar a busca binaria, que é a forma mais 
  * rápida de buscar em uma lista. A posição do usuário é calculada no momento que a 
- * solicitação é realizada e é retornada de acorod com o incice da lista.
+ * solicitação é realizada e é retornada de acorod com o incice da lista. Para evitar problemas de 
+ * concorrencia quando a lista está sendo modificada, todas as referencias de objetos da classe 
+ * não são enviadas para outras classe. São enviados novos objetos.
  *
  */
 

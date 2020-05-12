@@ -20,7 +20,9 @@ import br.com.leaderboard.services.UserService;
  *	são numeros inteiros, assim é possivel usar a busca binaria, que é a forma mais 
  *	rápida de buscar em uma lista. Essa lista é mais indicada para ocasiões que não precisa
  *	de uma grande quantidade de remoções e a inserções na mesma. Como a maioria das
- *	operações será de consulta isso não isso não será um problema.
+ *	operações será de consulta isso não isso não será um problema. Para evitar problemas de 
+ * 	concorrencia quando a lista está sendo modificada, todas as referencias de objetos dessa classe 
+ * 	não são enviadas para outras classe. São enviados novos objetos.
  *
  */
 
