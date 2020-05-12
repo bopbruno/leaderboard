@@ -4,6 +4,14 @@ import java.util.ArrayList;
 
 import lombok.Data;
 
+/**
+ * 
+ * @author Bruno de Oliveira Pedrosa
+ * Foi implementada a interface Comparable para
+ * possibilitar o uso de busca binaria
+ *
+ */
+
 @Data
 public class ScoreLine implements Comparable<Integer>{
 

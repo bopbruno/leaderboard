@@ -10,6 +10,20 @@ import br.com.leaderboard.dto.Score;
 import br.com.leaderboard.dto.User;
 import br.com.leaderboard.services.UserService;
 
+
+/**
+ * 
+ * @author Bruno de Oliveira Pedrosa
+ *
+ *	A lista CopyOnWriteArrayList foi escolhida pois ela evita problemas de concorrencia
+ *	para otimizar o tempo de busca os usuário são inseridos pela ordem de id que no caso
+ *	são numeros inteiros, assim é possivel usar a busca binaria, que é a forma mais 
+ *	rápida de buscar em uma lista. Essa lista é mais indicada para ocasiões que não precisa
+ *	de uma grande quantidade de remoções e a inserções na mesma. Como a maioria das
+ *	operações será de consulta isso não isso não será um problema.
+ *
+ */
+
 @Service
 public class UserServiceImpl implements UserService {
 

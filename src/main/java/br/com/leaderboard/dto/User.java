@@ -3,6 +3,14 @@ package br.com.leaderboard.dto;
 
 import lombok.Data;
 
+/**
+ * 
+ * @author Bruno de Oliveira Pedrosa
+ * Foi implementada a interface Comparable para
+ * possibilitar o uso de busca binaria
+ *
+ */
+
 @Data
 public class User implements Comparable<Integer>{
 

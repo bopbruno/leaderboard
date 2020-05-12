@@ -11,6 +11,20 @@ import br.com.leaderboard.dto.User;
 import br.com.leaderboard.dto.UserDto;
 import br.com.leaderboard.services.RankService;
 
+/**
+ * 
+ * @author Bruno de Oliveira Pedrosa
+ * Para essa classe foi escolhido uma  ArrayList e sincronização com os metodos que usam a lista,
+ * para evitar inconcistencia no retorno da lista com maiores score, caso por exemplo um usuário
+ * esteja sendo removido e adicionado em outra posição e uma solicitação de lista de maiores
+ * score é feita, resultando em uma lista onde o usuário em questão não apareça.
+ * Para otimizar o tempo de busca as posições são inseridos pela ordem score que no caso
+ * são numeros inteiros, assim é possivel usar a busca binaria, que é a forma mais 
+ * rápida de buscar em uma lista. A posição do usuário é calculada no momento que a 
+ * solicitação é realizada e é retornada de acorod com o incice da lista.
+ *
+ */
+
 @Service
 public class RankServiceImpl implements RankService {
 
